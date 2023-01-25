@@ -13,9 +13,9 @@ todoRouter.get('/', getTodos);
 
 todoRouter.post('/', createTodo);
 
-todoRouter.put('/', updateTodo);
+todoRouter.put('/:id', updateTodo);
 
-todoRouter.delete('/', deleteTodo);
+todoRouter.delete('/:id', deleteTodo);
 
 module.exports = {
     todoRouter
