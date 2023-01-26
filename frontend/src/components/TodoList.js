@@ -1,30 +1,68 @@
-import Todo from "./Todo";
-import {useState, useEffect} from 'react';
+import axios from "axios";
+import { useState } from "react";
+// import
 
 
-export default function TodoList() {
-const [list,setList] = useState([]);
-const [text, setText] = useState('');
+export default function TodoList({tasks,setTasksArray}) {
+  const [inputState, setInputState] = useState("");
+  const [status, setStatus] = useState(false);
+  const [deadline, setDeadline] = useState("");
+  const [priority, setPriority] = useState();
+const [isActiveEdit, setIsActiveEdit] = useState(false);
+const [editButton, setEditText] = useState('EDIT');
 
-const textHandler = (e) =>{
- setText(e.target.value)
-}
+const onChangeFun = (e) => {
+  e.preventDefault()
+  setInputState(e.target.value);
+};
+console.log(inputState)
+
+
+
+const putTask = {
+  valuee: inputState,
+  statuss: false,
+  deadlinee: "2023-01-02",
+  priorityy: 0,
+  created_att: "2023-01-02"
+};
+
+console.log(putTask)
+
+const editHandler = (id) => {
+  setIsActiveEdit((current) => !current); 
+  if (editButton === "EDIT") {
+    setEditText("SAVE");
+  } else {
+    setEditText("EDIT");
+    // axios
+    // .put(`http://localhost:4000/todos/:${id}`,putTask)
+  }
+};
+// const onEdit = () => {
+
+// };
+
   return (
-    <div className="d-flex flex-column">
-      <h1>Todo List</h1>
-      <form>
-       <input type='text' placeholder="new Task" onChange={textHandler} />
-       <button>ADD</button>
-       <label>Status:</label>
-       <input type='checkbox' />
-       <label>Deadline:</label>
-       <input type='date' />
-       <label>Priority</label>
-       <input type='number' min='0' max='2' />
-       {/* <label>Created at: {}</label> */}
-      </form>
-      
-      <Todo list={list}/>
+    <div>
+      {tasks.map((task) => {
+      return (
+        <div key={task.id}>
+          <div>
+            <div contentEditable={isActiveEdit ? true : false}>
+          <span  onChange = {onChangeFun}> {task.value}</span>
+          <span> {task.status} </span>
+          <span> {task.deadline} </span>
+          <span> {task.priority} </span>
+          <span> {task.created_at} </span>
+         </div>
+          <button onClick={() => editHandler(task.id)}> {editButton} </button>
+          <button > DONE </button>
+          <button> DELETE </button>
+          </div>
+        </div>
+      );
+    })}
     </div>
   )
 }
