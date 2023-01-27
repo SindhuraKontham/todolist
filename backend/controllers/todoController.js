@@ -1,20 +1,18 @@
-const { application } = require('express');
 const { db } = require('../db');
-
-//console.log(db);
 const getTodos = async (req,res)=>{
     try {
     const todos = await db.query(`SELECT * FROM todos;`)
     res.json(todos.rows)
     } catch (error) {
+        console.log(error.message)
         res.status(500).send('server error');
     }
 };
 
 const createTodo = async (req,res)=>{
     try {
-        const {valuee,statuss,deadlinee,priorityy,created_att} = req.body;
-        const newTodo = await db.query(`INSERT INTO todos (value, status, deadline,priority, created_at) VALUES ($1, $2, $3, $4, $5) RETURNING *`, [valuee,statuss,deadlinee,priorityy,created_att]);
+        const {valuee,deadlinee,priorityy} = req.body;
+        const newTodo = await db.query(`INSERT INTO todos (value, deadline,priority) VALUES ($1, $2, $3 ) RETURNING *`, [valuee,deadlinee,priorityy]);
         res.json(newTodo.rows[0])
 } catch (error) {
     console.log(error.message);
