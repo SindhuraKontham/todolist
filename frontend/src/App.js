@@ -1,18 +1,41 @@
-import './App.css';
-import TodoList from './components/TodoList';
-import 'bootstrap/dist/css/bootstrap.min.css';
-
-import Add from './components/Add';
-
+import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Todo from "./components/Todo";
+import Add from "./components/Add";
+import { useState, useEffect } from "react";
 
 function App() {
+  const [statusF, setStatus] = useState(false);
+  const [inputState, setInputState] = useState("");
+  const [tasks, setTasksArray] = useState([]);
 
+  const getTodos = async () => {
+    try {
+      const response = await fetch("http://localhost:4000/todos");
+      const jsonData = await response.json();
+      setTasksArray(jsonData);
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
 
+  useEffect(() => {
+    getTodos();
+  }, []);
 
   return (
-    <div className="App">
-    <Add />
-    {/* <TodoList /> */}
+    <div className="Container">
+      <Add
+        inputState={inputState}
+        setInputState={setInputState}
+        setTasksArray={setTasksArray}
+      />
+      <Todo
+        statusF={statusF}
+        setStatus={setStatus}
+        tasks={tasks}
+        setTasksArray={setTasksArray}
+      />
     </div>
   );
 }
