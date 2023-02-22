@@ -1,56 +1,59 @@
 import React from "react";
-import { useEffect, useState } from "react";
 import Delete from "./Delete";
+import "./main.css";
 import CheckBox from "./CheckBox";
-
-export default function Todo({
-  statusF,
-  setStatus,
-  tasks,
-  setTasksArray,
-}) {
-  
-
+import Edit from "./Edit";
+export default function Todo({  tasks, setTasksArray }) {
   return (
-    <div>
+    <div >
       <table class="table mt-5 text-center">
         <thead>
           <tr>
             <th>Description</th>
-            <th></th>
+            {/* <th></th> */}
             <th>Status</th>
-            <th>Deadline</th>
             <th>Priority</th>
+            <th>Deadline</th>
             <th>Created_Date</th>
             <th></th>
           </tr>
         </thead>
-        <tbody>
-
+        <tbody >
           {tasks.map((task) => (
             <tr key={task.id}>
               <td>{task.value}</td>
-              <td>
+              {/* <td>
                 <CheckBox
                   id={task.id}
-                  statusF={statusF}
-                  setStatus={setStatus}
                   value={task.value}
                   deadline={task.deadline}
                   priority={task.priority}
                   setTasksArray={setTasksArray}
                 />
-                </td>
-                {task.status ? "pending" : "finished"}
-                <td>
-              </td>
-              <td>{task.deadline.split("T")[0]}</td>
+              </td> */}
+              <td>{task.status ?   "finished" : "pending"}</td>
               <td>{task.priority}</td>
+              <td>{task.deadline.split("T")[0]}</td>
               <td>{task.created_at.split("T")[0]}</td>
-              <td>
+              <td className="buttons">
                 <Delete
                   id={task.id}
                   tasks={tasks}
+                  setTasksArray={setTasksArray}
+                />
+                <Edit
+                  id={task.id}
+                  task={task.value}
+                  date={task.deadline.split("T")[0]}
+                  priority={task.priority}
+                  setTasksArray={setTasksArray}
+                />
+                 <CheckBox
+                  id={task.id}
+                  status={task.status}
+                  value={task.value}
+                  date={task.deadline.split("T")[0]}
+                  priority={task.priority}
                   setTasksArray={setTasksArray}
                 />
               </td>
