@@ -5,7 +5,7 @@ import Add from "./components/Add";
 import { useState, useEffect } from "react";
 
 function App() {
-  const [statusF, setStatus] = useState(false);
+  
   const [inputState, setInputState] = useState("");
   const [tasks, setTasksArray] = useState([]);
 
@@ -31,8 +31,6 @@ function App() {
         setTasksArray={setTasksArray}
       />
       <Todo
-        statusF={statusF}
-        setStatus={setStatus}
         tasks={tasks}
         setTasksArray={setTasksArray}
       />

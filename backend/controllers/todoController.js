@@ -25,6 +25,7 @@ const updateTodo = async (req,res)=>{
     try {
         const {id} = req.params;
         const {valuee,statuss,deadlinee,priorityy,created_att} = req.body;
+        console.log(valuee,statuss,deadlinee,priorityy)
        const updatedTodo = await db.query(`UPDATE todos SET value=$1,status=$2,deadline=$3,priority=$4 WHERE id=$5 RETURNING *`, [valuee,statuss,deadlinee,priorityy,id]);
         res.json(updatedTodo.rows[0]);
     } catch (error) {
